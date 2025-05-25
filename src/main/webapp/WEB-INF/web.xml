@@ -1,16 +1,12 @@
-<web-app xmlns="http://jakarta.ee/xml/ns/jakartaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://jakarta.ee/xml/ns/jakartaee
-                             http://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-         version="5.0">
-
-    <servlet>
-        <servlet-name>HelloController</servlet-name>
-        <servlet-class>com.example.controller.HelloController</servlet-class>
+<web-app>
+    <!-- <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.example.controller.LoginController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>HelloController</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping> -->
+    
 </web-app>
