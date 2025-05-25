@@ -18,7 +18,6 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
         HttpSession session = req.getSession();
 
         // Kiểm tra dữ liệu đầu vào đơn giản
@@ -34,7 +33,6 @@ public class LoginController extends HttpServlet {
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, username);
                 ps.setString(2, password);
-
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         String role = rs.getString("role");

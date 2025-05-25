@@ -22,12 +22,23 @@
     </style>
 </head>
 <%
-    String uploadMessage = (String) session.getAttribute("uploadMessage");
-    if (uploadMessage != null) {
+    String msg = (String) session.getAttribute("uploadMessage");
+    if (msg != null) {
 %>
-    <p style="color: red;"><%= uploadMessage %></p>
+    <div style="color: green; font-weight: bold;"><%= msg %></div>
+
+    <% if ("Uploaded, Processing".equals(msg)) { %>
+        <script>
+            // Tự động reload sau 3 giây
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        </script>
+    <% } %>
+
 <%
-        session.removeAttribute("uploadMessage"); // Xóa để không hiển thị lại lần sau
+        // Optional: clear sau khi hiển thị
+        session.removeAttribute("uploadMessage");
     }
 %>
 

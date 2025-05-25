@@ -71,4 +71,17 @@ public class TaskManager {
             return false;
         }
     }
+    public static boolean markTaskAsFinished(String username, String filename) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "UPDATE tasks SET status = 'Finished' WHERE client_id = ? AND file_result = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, filename);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
 }
