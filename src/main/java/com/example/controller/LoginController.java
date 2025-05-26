@@ -20,14 +20,12 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
 
-        // Kiểm tra dữ liệu đầu vào đơn giản
         if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             req.setAttribute("error", "Username and password must not be empty");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
             return;
         }
 
-        // Kết nối DB và kiểm tra
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT role FROM users WHERE username = ? AND password = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -39,7 +37,6 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("username", username);
                         session.setAttribute("role", role);
 
-                        // Chuyển hướng theo role
                         if ("admin".equals(role)) {
                             resp.sendRedirect("admin.jsp");
                         } else {
@@ -53,7 +50,6 @@ public class LoginController extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             req.setAttribute("error", "Database error: " + e.getMessage());
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         }

@@ -29,7 +29,6 @@
 
     <% if ("Uploaded, Processing".equals(msg)) { %>
         <script>
-            // Tự động reload sau 3 giây
             setTimeout(() => {
                 window.location.reload();
             }, 3000);

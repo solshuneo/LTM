@@ -15,6 +15,11 @@
         .finished { color: green; }
         .processing { color: orange; }
     </style>
+    <script>
+        setInterval(() => {
+            window.location.reload();
+        }, 3000); // reload mỗi 3 giây
+    </script>
 </head>
 <body>
 <h2>Admin Dashboard | <a href="logout.jsp">Logout</a></h2>

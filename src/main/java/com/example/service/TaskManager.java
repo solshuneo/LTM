@@ -9,7 +9,6 @@ import java.util.List;
 
 public class TaskManager {
 
-    // Lấy danh sách task của user
     public static List<Task> getUserTasks(String username) {
         List<Task> tasks = new ArrayList<>();
         String sql = "SELECT id, client_id, status, file_result FROM tasks WHERE client_id = ?";
@@ -32,7 +31,6 @@ public class TaskManager {
         return tasks;
     }
 
-    // Lấy tất cả task (admin)
     public static List<Task> getAllTasks() {
         List<Task> tasks = new ArrayList<>();
         String sql = "SELECT id, client_id, status, file_result FROM tasks";
@@ -54,7 +52,6 @@ public class TaskManager {
         return tasks;
     }
 
-    // Thêm task mới
     public static boolean createTask(String username, String status, String fileResult) {
         String sql = "INSERT INTO tasks (client_id, status, file_result) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();

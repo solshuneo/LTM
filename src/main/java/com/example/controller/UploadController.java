@@ -69,7 +69,7 @@ public class UploadController extends HttpServlet {
                 output.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            session.setAttribute("uploadMessage", "Lỗi lưu file: " + e.getMessage());
+            session.setAttribute("uploadMessage", "Error save file: " + e.getMessage());
             response.sendRedirect("home.jsp");
             return;
         }
@@ -85,10 +85,10 @@ public class UploadController extends HttpServlet {
 
                 }).start();
             } else {
-                session.setAttribute("uploadMessage", "Lỗi tạo task trong database!");
+                session.setAttribute("uploadMessage", "Cant create task for " + username + " with file " + newFileName);
             }
         } catch (Exception e) {
-            session.setAttribute("uploadMessage", "Lỗi tạo task: " + e.getMessage());
+            session.setAttribute("uploadMessage", "Cant create task" + e.getMessage());
         }
 
         response.sendRedirect("home.jsp");
@@ -96,7 +96,7 @@ public class UploadController extends HttpServlet {
 
     private boolean processImage(String username, String filename, String uploadPath) {
         try {
-            Thread.sleep(2000); // dừng 2000 mili-giây = 2 giây
+            Thread.sleep(10000);
             // update 60-100s random 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -104,7 +104,6 @@ public class UploadController extends HttpServlet {
         try {
             File imageFile = new File(uploadPath, filename);
 
-            // Sử dụng Tesseract OCR
             Tesseract tesseract = new Tesseract();
             String datapath = getServletContext().getRealPath("/tess4j_contents/tessdata");
             tesseract.setDatapath(datapath);
@@ -112,14 +111,12 @@ public class UploadController extends HttpServlet {
 
             String extractedText = tesseract.doOCR(imageFile);
 
-            // Lưu ra file .txt cùng tên
             String textFilename = filename.replaceAll("\\.[^.]+$", ".txt");
             File textFile = new File(uploadPath, textFilename);
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(textFile))) {
                 writer.write(extractedText);
             }
 
-            // ✅ Cập nhật database
             return TaskManager.markTaskAsFinished(username, filename);
 
         } catch (TesseractException | IOException e) {
